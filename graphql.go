@@ -65,6 +65,7 @@ func NewClient(endpoint string, opts ...ClientOption) *Client {
 	if c.httpClient == nil {
 		c.httpClient = http.DefaultClient
 	}
+	c.Headers = make(map[string]string)
 	return c
 }
 
