@@ -89,6 +89,9 @@ func (c *Client) Run(ctx context.Context, req *Request, resp interface{}) error 
 	if err := writer.WriteField("query", req.q); err != nil {
 		return errors.Wrap(err, "write query field")
 	}
+	if err := writer.WriteField("graphql", req.q); err != nil {
+		return errors.Wrap(err, "write query field")
+	}
 	var variablesBuf bytes.Buffer
 	if len(req.vars) > 0 {
 		variablesField, err := writer.CreateFormField("variables")
