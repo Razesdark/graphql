@@ -46,7 +46,7 @@ import (
 type Client struct {
 	endpoint   string
 	httpClient *http.Client
-
+	Headers    map[string]string
 	// Log is called with various debug information.
 	// To log to standard out, use:
 	//  client.Log = func(s string) { log.Println(s) }
@@ -123,6 +123,11 @@ func (c *Client) Run(ctx context.Context, req *Request, resp interface{}) error 
 	r.Header.Set("Content-Type", writer.FormDataContentType())
 	r.Header.Set("Accept", "application/json")
 	r = r.WithContext(ctx)
+
+	for k, v := range c.Headers {
+		r.Header.Set(k, v)
+	}
+
 	res, err := c.httpClient.Do(r)
 	if err != nil {
 		return err
